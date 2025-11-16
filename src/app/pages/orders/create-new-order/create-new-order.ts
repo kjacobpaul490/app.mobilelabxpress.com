@@ -74,7 +74,6 @@ export class CreateNewOrder {
 
   createOrder() {
     if (this.selectedPatient) {
-      console.log('Creating order for patient:', this.selectedPatient);
       // Add order creation logic here
     }
   }

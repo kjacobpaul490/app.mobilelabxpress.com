@@ -45,7 +45,6 @@ export class InsuranceInformation {
     }
     this.isSubmitting = true;
     setTimeout(() => {
-      console.log('Insurance information saved:', this.formData);
       this.router.navigate(['/layout/order-information']);
     }, 1000);
   }

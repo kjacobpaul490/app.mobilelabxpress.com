@@ -44,7 +44,6 @@ export class OrderInformation {
     }
     this.isSubmitting = true;
     setTimeout(() => {
-      console.log('Order information saved:', this.formData);
       this.router.navigate(['/layout/preview']);
     }, 1000);
   }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AddFacilityService, Facility } from '../../../services/facility';
 
 @Component({
   selector: 'app-add-facility',
@@ -9,7 +10,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './add-facility.css'
 })
 export class AddFacility {
-  facility = {
+  facility: Facility = {
     Name: '',
     MobileNumber: '',
     AlternativeMobileNumber: '',
@@ -29,18 +30,59 @@ export class AddFacility {
   };
 
   validationErrors: any = {};
+  isSubmitting = false;
+  submitSuccess = false;
+  submitError = '';
+
+  constructor(private facilityService: AddFacilityService) {}
 
   onSubmit() {
     if (this.validateForm()) {
-      // Add your form submission logic here
+      this.isSubmitting = true;
+      this.submitError = '';
+      this.submitSuccess = false;
+
+      this.facilityService.createFacility(this.facility).subscribe({
+        next: (response) => {
+          this.isSubmitting = false;
+          this.submitSuccess = true;
+          this.resetForm();
+          // Handle success - you can add navigation or success message here
+        },
+        error: (error) => {
+          this.isSubmitting = false;
+          this.submitError = error.error?.message || 'Failed to create facility. Please try again.';
+          // Handle error
+        }
+      });
     }
+  }
+
+  resetForm() {
+    this.facility = {
+      Name: '',
+      MobileNumber: '',
+      AlternativeMobileNumber: '',
+      Email: '',
+      FaxNumber: '',
+      AddressLine1: '',
+      AddressLine2: '',
+      City: '',
+      State: '',
+      Zipcode: '',
+      Country: '',
+      PrimaryInchargeName: '',
+      PrimaryInchargeMobileNumber: '',
+      PrimaryInchargeDesignation: '',
+      IsActive: true,
+      ResultCommunicationMethod: ''
+    };
+    this.validationErrors = {};
   }
 
   validateForm(): boolean {
     this.validationErrors = {};
     let isValid = true;
-
-    debugger
 
     // Name validation (varchar(250))
     if (!this.facility.Name || this.facility.Name.trim().length < 3) {

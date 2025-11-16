@@ -1,0 +1,167 @@
+<div class="physician-container">
+  <h2>Add New Physician</h2>
+  <form (ngSubmit)="onSubmit()" #physicianForm="ngForm">
+    
+    <div class="form-group">
+      <label for="npi">NPI Number:</label>
+      <input 
+        type="number" 
+        id="npi" 
+        name="npi" 
+        [(ngModel)]="physician.Npi" 
+        (blur)="clearError('Npi')"
+        [class.error]="validationErrors.Npi"
+        min="1" />
+      <span class="error-message" *ngIf="validationErrors.Npi">{{ validationErrors.Npi }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Physician Name: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        [(ngModel)]="physician.Name" 
+        (blur)="clearError('Name')"
+        [class.error]="validationErrors.Name"
+        required 
+        minlength="3"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.Name">{{ validationErrors.Name }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="phone_number">Phone Number: <span class="required">*</span></label>
+      <input 
+        type="tel" 
+        id="phone_number" 
+        name="phone_number" 
+        [(ngModel)]="physician.PhoneNumber" 
+        (blur)="clearError('PhoneNumber')"
+        [class.error]="validationErrors.PhoneNumber"
+        maxlength="20"
+        placeholder="Phone number"
+        required />
+      <span class="error-message" *ngIf="validationErrors.PhoneNumber">{{ validationErrors.PhoneNumber }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="alternative_phone_number">Alternative Phone Number:</label>
+      <input 
+        type="tel" 
+        id="alternative_phone_number" 
+        name="alternative_phone_number" 
+        [(ngModel)]="physician.AlternativePhoneNumber" 
+        (blur)="clearError('AlternativePhoneNumber')"
+        [class.error]="validationErrors.AlternativePhoneNumber"
+        maxlength="20"
+        placeholder="Alternative phone number" />
+      <span class="error-message" *ngIf="validationErrors.AlternativePhoneNumber">{{ validationErrors.AlternativePhoneNumber }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="enumeration_date">Enumeration Date: <span class="required">*</span></label>
+      <input 
+        type="date" 
+        id="enumeration_date" 
+        name="enumeration_date" 
+        [(ngModel)]="physician.EnumerationDate" 
+        (blur)="clearError('EnumerationDate')"
+        [class.error]="validationErrors.EnumerationDate"
+        required />
+      <span class="error-message" *ngIf="validationErrors.EnumerationDate">{{ validationErrors.EnumerationDate }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="npi_type">NPI Type: <span class="required">*</span></label>
+      <select 
+        id="npi_type" 
+        name="npi_type" 
+        [(ngModel)]="physician.NpiType" 
+        (blur)="clearError('NpiType')"
+        [class.error]="validationErrors.NpiType"
+        required>
+        <option value="">Select NPI Type</option>
+        <option value="Individual">Individual (Type 1)</option>
+        <option value="Organization">Organization (Type 2)</option>
+      </select>
+      <span class="error-message" *ngIf="validationErrors.NpiType">{{ validationErrors.NpiType }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="is_sole_proprietor">Is Sole Proprietor:</label>
+      <input 
+        type="checkbox" 
+        id="is_sole_proprietor" 
+        name="is_sole_proprietor" 
+        [(ngModel)]="physician.IsSoleProprietor" />
+    </div>
+
+    <div class="form-group">
+      <label for="is_active">Is Active:</label>
+      <input 
+        type="checkbox" 
+        id="is_active" 
+        name="is_active" 
+        [(ngModel)]="physician.IsActive" />
+    </div>
+
+    <div class="form-group">
+      <label for="mailing_address">Mailing Address: <span class="required">*</span></label>
+      <textarea 
+        id="mailing_address" 
+        name="mailing_address" 
+        [(ngModel)]="physician.MailingAddress" 
+        (blur)="clearError('MailingAddress')"
+        [class.error]="validationErrors.MailingAddress"
+        required 
+        minlength="5"
+        maxlength="500"
+        rows="3"></textarea>
+      <span class="error-message" *ngIf="validationErrors.MailingAddress">{{ validationErrors.MailingAddress }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="primary_practice_address">Primary Practice Address: <span class="required">*</span></label>
+      <textarea 
+        id="primary_practice_address" 
+        name="primary_practice_address" 
+        [(ngModel)]="physician.PrimaryPracticeAddress" 
+        (blur)="clearError('PrimaryPracticeAddress')"
+        [class.error]="validationErrors.PrimaryPracticeAddress"
+        required 
+        minlength="5"
+        maxlength="500"
+        rows="3"></textarea>
+      <span class="error-message" *ngIf="validationErrors.PrimaryPracticeAddress">{{ validationErrors.PrimaryPracticeAddress }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="secondary_practice_address">Secondary Practice Address:</label>
+      <textarea 
+        id="secondary_practice_address" 
+        name="secondary_practice_address" 
+        [(ngModel)]="physician.SecondaryPracticeAddress" 
+        (blur)="clearError('SecondaryPracticeAddress')"
+        [class.error]="validationErrors.SecondaryPracticeAddress"
+        maxlength="500"
+        rows="3"></textarea>
+      <span class="error-message" *ngIf="validationErrors.SecondaryPracticeAddress">{{ validationErrors.SecondaryPracticeAddress }}</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Submitting...' : 'Submit' }}
+      </button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </div>
+
+    <div class="success-message" *ngIf="submitSuccess">
+      Physician created successfully!
+    </div>
+    <div class="error-message" *ngIf="submitError">
+      {{ submitError }}
+    </div>
+
+  </form>
+</div>

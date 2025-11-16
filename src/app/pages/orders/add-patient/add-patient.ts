@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddPatientService } from '../../../services/add-patient';
+import { AddPatientService } from '../../../services/patient';
 
 @Component({
   selector: 'app-add-patient',
@@ -131,9 +131,7 @@ export class AddPatient {
     };
   }
 
-  // Submit form
   onSubmit() {
-    debugger;
     if (!this.validateForm()) {
       return;
     }
@@ -141,23 +139,18 @@ export class AddPatient {
     this.isSubmitting = true;
     this.errorMessage = '';
     
-    // Convert to PascalCase for backend
     const patientData = this.convertToPascalCase(this.formData);
     
-    // Call API to add patient
     this.patientService.addPatient(patientData as any).subscribe({
       next: (response) => {
-        console.log('Patient added successfully:', response);
         this.isSubmitting = false;
         this.showSuccessMessage = true;
 
-        // Redirect after 2 seconds
         setTimeout(() => {
           this.router.navigate(['/layout/create-new-order']);
         }, 2000);
       },
       error: (error) => {
-        console.error('Error adding patient:', error);
         this.isSubmitting = false;
         this.errorMessage = error.error?.message || 'Failed to add patient. Please try again.';
       }
