@@ -1,0 +1,66 @@
+.dashboard-container {
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  background: linear-gradient(135deg, #f8fafb 0%, #f0f4f7 100%);
+}
+
+.welcome-section {
+  text-align: center;
+  max-width: 600px;
+}
+
+.welcome-section h1 {
+  margin: 0 0 16px;
+  color: #0D382B;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.welcome-section p {
+  margin: 0 0 40px;
+  color: #7D968E;
+  font-size: 16px;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.action-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e8ecf1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.action-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 152, 41, 0.1);
+  border-color: #009829;
+}
+
+.action-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.action-card h3 {
+  margin: 0 0 8px;
+  color: #0D382B;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.action-card p {
+  margin: 0;
+  color: #7D968E;
+  font-size: 13px;
+}

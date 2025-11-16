@@ -1,0 +1,22 @@
+/* Import Google Fonts for MLX brand */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Nunito', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom base styles using MLX brand colors */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    color: #0D382B;
+  }
+}

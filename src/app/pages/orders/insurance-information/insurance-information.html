@@ -1,0 +1,116 @@
+<div class="insurance-information-container">
+  <app-status-bar></app-status-bar>
+
+  <div class="form-wrapper">
+    <div class="form-header">
+      <button class="btn-back" (click)="onBack()" title="Go back">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <div class="header-content">
+        <h2>Insurance Information</h2>
+        <p>Enter patient insurance details</p>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+        <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <form class="insurance-form" (ngSubmit)="onSubmit()">
+      <div class="form-section">
+        <h3 class="section-title">Insurance Details</h3>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="insuranceProvider">Insurance Provider *</label>
+            <input
+              type="text"
+              id="insuranceProvider"
+              [(ngModel)]="formData.insuranceProvider"
+              name="insuranceProvider"
+              placeholder="e.g., BlueCross BlueShield"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="policyNumber">Policy Number *</label>
+            <input
+              type="text"
+              id="policyNumber"
+              [(ngModel)]="formData.policyNumber"
+              name="policyNumber"
+              placeholder="e.g., BCS1234567890"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="groupNumber">Group Number</label>
+            <input
+              type="text"
+              id="groupNumber"
+              [(ngModel)]="formData.groupNumber"
+              name="groupNumber"
+              placeholder="e.g., GRP12345"
+            />
+          </div>
+          <div class="form-group">
+            <label for="memberId">Member ID</label>
+            <input
+              type="text"
+              id="memberId"
+              [(ngModel)]="formData.memberId"
+              name="memberId"
+              placeholder="e.g., MEM987654"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="copay">Co-Pay Amount ($)</label>
+            <input
+              type="number"
+              id="copay"
+              [(ngModel)]="formData.copay"
+              name="copay"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+          <div class="form-group">
+            <label for="deductible">Annual Deductible ($)</label>
+            <input
+              type="number"
+              id="deductible"
+              [(ngModel)]="formData.deductible"
+              name="deductible"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-skip" (click)="onSkip()">
+          Skip
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Next: Order Information</span>
+          <span *ngIf="isSubmitting">Saving...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

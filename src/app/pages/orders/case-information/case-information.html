@@ -1,0 +1,103 @@
+<div class="case-information-container">
+  <app-status-bar></app-status-bar>
+
+  <div class="form-wrapper">
+    <div class="form-header">
+      <button class="btn-back" (click)="onBack()" title="Go back">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <div class="header-content">
+        <h2>Case Information</h2>
+        <p>Enter patient case details</p>
+      </div>
+    </div>
+
+    <div class="error-message" *ngIf="errorMessage">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+        <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <form class="case-form" (ngSubmit)="onSubmit()">
+      <div class="form-section">
+        <h3 class="section-title">Case Details</h3>
+
+        <div class="form-group">
+          <label for="caseType">Case Type *</label>
+          <select
+            id="caseType"
+            [(ngModel)]="formData.caseType"
+            name="caseType"
+            required
+          >
+            <option value="">Select case type...</option>
+            <option value="Lab Test">Lab Test</option>
+            <option value="Imaging">Imaging</option>
+            <option value="Consultation">Consultation</option>
+            <option value="Procedure">Procedure</option>
+            <option value="Follow-up">Follow-up</option>
+          </select>
+        </div>
+
+        <div class="form-group form-group-full">
+          <label for="symptoms">Symptoms/Chief Complaint *</label>
+          <textarea
+            id="symptoms"
+            [(ngModel)]="formData.symptoms"
+            name="symptoms"
+            rows="4"
+            placeholder="Describe patient symptoms or chief complaint"
+            required
+          ></textarea>
+        </div>
+
+        <div class="form-group form-group-full">
+          <label for="diagnosis">Preliminary Diagnosis</label>
+          <textarea
+            id="diagnosis"
+            [(ngModel)]="formData.diagnosis"
+            name="diagnosis"
+            rows="3"
+            placeholder="Enter preliminary diagnosis if available"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="referralSource">Referral Source</label>
+          <input
+            type="text"
+            id="referralSource"
+            [(ngModel)]="formData.referralSource"
+            name="referralSource"
+            placeholder="e.g., Primary Care Physician"
+          />
+        </div>
+
+        <div class="form-group form-group-full">
+          <label for="notes">Additional Notes</label>
+          <textarea
+            id="notes"
+            [(ngModel)]="formData.notes"
+            name="notes"
+            rows="3"
+            placeholder="Any additional information"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-skip" (click)="onSkip()">
+          Skip
+        </button>
+        <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+          <span *ngIf="!isSubmitting">Next: Insurance Information</span>
+          <span *ngIf="isSubmitting">Saving...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,131 @@
+<div class="create-order-container">
+  <!-- Header -->
+  <div class="header-section">
+    <h2>Create New Order</h2>
+    <p>Select a patient to create a new order</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content-section">
+    <!-- Selected Patient Card -->
+    <div class="selected-patient-card" *ngIf="selectedPatient">
+      <div class="patient-info">
+        <div class="patient-header">
+          <h3>{{ selectedPatient.name }}</h3>
+          <button class="btn-clear" (click)="clearSelection()" title="Clear selection">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+        <div class="patient-details">
+          <div class="detail-row">
+            <span class="label">Patient ID:</span>
+            <span class="value">{{ selectedPatient.patientId }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Email:</span>
+            <span class="value">{{ selectedPatient.email }}</span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Phone:</span>
+            <span class="value">{{ selectedPatient.phone }}</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn-proceed" (click)="createOrder()">Proceed to Order Details</button>
+    </div>
+
+    <!-- Search Section -->
+    <div class="search-section" *ngIf="!selectedPatient">
+      <div class="search-bar-wrapper">
+        <!-- Search Input with Lookup Button -->
+        <div class="search-input-group">
+          <input
+            type="text"
+            class="search-input"
+            [(ngModel)]="searchQuery"
+            (focus)="onSearchFocus()"
+            (input)="onSearchChange()"
+            placeholder="Search patient by name, ID, or email..."
+            autocomplete="off"
+          />
+          <button class="btn-lookup" (click)="lookupPatient()" title="Lookup Patient">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
+              <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+            Lookup Patient
+          </button>
+        </div>
+
+        <!-- Add Patient Button -->
+        <button class="btn-add-patient" (click)="addNewPatient()" title="Add New Patient">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5v14m7-7H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          Add Patient
+        </button>
+      </div>
+
+      <!-- Search Results -->
+      <div class="search-results" *ngIf="showSearchResults && filteredPatients.length > 0">
+        <div class="results-header">
+          <p>Found {{ filteredPatients.length }} patient(s)</p>
+        </div>
+        <div class="results-list">
+          <div
+            class="result-item"
+            *ngFor="let patient of filteredPatients"
+            (click)="selectPatient(patient)"
+          >
+            <div class="result-content">
+              <h4>{{ patient.name }}</h4>
+              <p class="patient-id">{{ patient.patientId }}</p>
+              <p class="patient-contact">{{ patient.email }} • {{ patient.phone }}</p>
+            </div>
+            <svg class="result-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Results -->
+      <div class="no-results" *ngIf="showSearchResults && filteredPatients.length === 0 && searchQuery">
+        <svg class="empty-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2" />
+          <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+        </svg>
+        <p>No patients found matching "{{ searchQuery }}"</p>
+        <p class="hint">Try searching with a different name or patient ID</p>
+      </div>
+
+      <!-- Initial State with All Patients -->
+      <div class="patients-list" *ngIf="showSearchResults && !searchQuery">
+        <div class="results-header">
+          <p>All Patients ({{ patients.length }})</p>
+        </div>
+        <div class="results-list">
+          <div
+            class="result-item"
+            *ngFor="let patient of patients"
+            (click)="selectPatient(patient)"
+          >
+            <div class="result-content">
+              <h4>{{ patient.name }}</h4>
+              <p class="patient-id">{{ patient.patientId }}</p>
+              <p class="patient-contact">{{ patient.email }} • {{ patient.phone }}</p>
+            </div>
+            <svg class="result-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Close search results when clicking outside -->
+<div class="overlay" *ngIf="showSearchResults" (click)="showSearchResults = false"></div>

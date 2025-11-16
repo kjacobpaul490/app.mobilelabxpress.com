@@ -1,0 +1,108 @@
+<div class="preview-container">
+  <app-status-bar></app-status-bar>
+
+  <div class="preview-wrapper">
+    <div class="preview-header">
+      <h2>Review Order</h2>
+      <p>Please review the information before submitting</p>
+    </div>
+
+    <div class="preview-content">
+      <!-- Patient Information Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3>Patient Information</h3>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2" />
+            <path d="M6 20c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <span class="label">Patient Name:</span>
+            <span class="value">{{ orderData.patient }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Patient ID:</span>
+            <span class="value">{{ orderData.patientId }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case Information Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3>Case Information</h3>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <span class="label">Case Type:</span>
+            <span class="value">{{ orderData.caseType }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Priority:</span>
+            <span class="value">
+              <span class="badge" [class]="'badge-' + orderData.priority.toLowerCase()">
+                {{ orderData.priority }}
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Information Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3>Order Information</h3>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <span class="label">Order Type:</span>
+            <span class="value">{{ orderData.orderType }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insurance Information Card -->
+      <div class="info-card">
+        <div class="card-header">
+          <h3>Insurance Information</h3>
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2" />
+            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="12" cy="16" r="1" fill="currentColor" />
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="info-row">
+            <span class="label">Insurance Provider:</span>
+            <span class="value">{{ orderData.insuranceProvider }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-actions">
+      <button class="btn-edit" (click)="onEdit()">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        Edit Order
+      </button>
+      <button class="btn-submit" (click)="onSubmit()" [disabled]="isSubmitting">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span *ngIf="!isSubmitting">Submit Order</span>
+        <span *ngIf="isSubmitting">Submitting...</span>
+      </button>
+    </div>
+  </div>
+</div>

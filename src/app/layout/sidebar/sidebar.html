@@ -1,0 +1,57 @@
+<aside class="sidebar" [class.collapsed]="!sidebarOpen">
+  <!-- Sidebar Header -->
+  <div class="sidebar-header">
+    <h3 class="sidebar-title" *ngIf="sidebarOpen">Menu</h3>
+    <button class="toggle-btn" (click)="toggleSidebar()" title="Toggle sidebar">
+      <svg class="toggle-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu Items -->
+  <nav class="sidebar-nav">
+    <div class="menu-section" *ngFor="let item of menuItems">
+      <!-- Menu Item Header - if it's a direct link -->
+      <a *ngIf="item.route && !item.submenu" 
+         [routerLink]="item.route"
+         routerLinkActive="active"
+         class="menu-item menu-link">
+        <span class="menu-icon">{{ item.icon }}</span>
+        <span class="menu-label" *ngIf="sidebarOpen">{{ item.label }}</span>
+      </a>
+
+      <!-- Menu Item Header - if it has submenu -->
+      <button *ngIf="item.submenu" 
+              class="menu-item" 
+              (click)="toggleMenu(item.id)" 
+              [class.active]="activeMenu === item.id">
+        <span class="menu-icon">{{ item.icon }}</span>
+        <span class="menu-label" *ngIf="sidebarOpen">{{ item.label }}</span>
+        <span class="menu-arrow" *ngIf="sidebarOpen && item.submenu" [class.rotated]="activeMenu === item.id">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </button>
+
+      <!-- Submenu Items (Level 1) -->
+      <div class="submenu" *ngIf="item.submenu && activeMenu === item.id">
+        <div class="submenu-item-wrapper" *ngFor="let subitem of item.submenu">
+          <!-- Direct link items -->
+          <a [routerLink]="subitem.route"
+             routerLinkActive="active"
+             class="submenu-item">
+            <span class="submenu-dot"></span>
+            <span class="submenu-label" *ngIf="sidebarOpen">{{ subitem.label }}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer" *ngIf="sidebarOpen">
+    <p class="footer-text">v1.0.0</p>
+  </div>
+</aside>

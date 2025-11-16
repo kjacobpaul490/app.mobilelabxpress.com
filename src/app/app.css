@@ -1,0 +1,128 @@
+/* 🌿 Mobile Lab Xpress - Brand Theme (Angular Global Styles)
+   Based on MLX Brand Guidelines 2025
+   Primary: #0D382B
+   Accent: #009829
+   Extended Palette: #7D968E, #C0CECA, #D7E1DE, #2FAA51, #8ECFA2, #BEE2CA, #D5EBDE
+*/
+
+/* -------------------- Global Base -------------------- */
+:root {
+    --mlx-primary: #0D382B;
+    --mlx-accent: #009829;
+    --mlx-contrast: #FFFFFF;
+    --mlx-neutral-dark: #7D968E;
+    --mlx-neutral-mid: #C0CECA;
+    --mlx-neutral-light: #D7E1DE;
+    --mlx-green-light: #2FAA51;
+    --mlx-green-soft: #8ECFA2;
+    --mlx-green-lighter: #BEE2CA;
+    --mlx-green-bg: #D5EBDE;
+  
+    --font-family-base: 'Poppins', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  }
+  
+  /* -------------------- Global Styles -------------------- */
+  body {
+    font-family: var(--font-family-base);
+    background-color: var(--mlx-green-bg);
+    color: var(--mlx-primary);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+  
+  /* -------------------- Header -------------------- */
+  header {
+    background-color: var(--mlx-primary);
+    color: var(--mlx-contrast);
+    padding: 1rem 2rem;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  header p {
+    font-size: 1rem;
+    color: var(--mlx-green-soft);
+  }
+  
+  /* -------------------- Buttons -------------------- */
+  button {
+    background-color: var(--mlx-accent);
+    color: var(--mlx-contrast);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: var(--mlx-green-light);
+    transform: translateY(-2px);
+  }
+  
+  /* -------------------- Cards -------------------- */
+  .card {
+    background: var(--mlx-contrast);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(13, 56, 43, 0.1);
+    margin: 20px 0;
+    border: 1px solid var(--mlx-neutral-light);
+  }
+  
+  .card h2 {
+    color: var(--mlx-primary);
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    color: var(--mlx-neutral-dark);
+  }
+  
+  /* -------------------- Links -------------------- */
+  a {
+    color: var(--mlx-accent);
+    text-decoration: none;
+    transition: 0.2s ease-in;
+  }
+  
+  a:hover {
+    color: var(--mlx-green-light);
+    text-decoration: underline;
+  }
+  
+  /* -------------------- Forms -------------------- */
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--mlx-neutral-mid);
+    border-radius: 6px;
+    margin-top: 6px;
+    font-size: 14px;
+    transition: border 0.2s ease-in-out;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--mlx-accent);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 152, 41, 0.3);
+  }
+  
+  /* -------------------- Footer -------------------- */
+  footer {
+    background-color: var(--mlx-primary);
+    color: var(--mlx-contrast);
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    margin-top: 40px;
+  }
+  

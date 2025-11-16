@@ -1,0 +1,310 @@
+<div class="add-patient-container">
+  <!-- Header -->
+  <div class="form-header">
+    <button class="btn-back" (click)="goBack()" title="Go back">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+    <div class="header-content">
+      <h2>Add New Patient</h2>
+      <p>Enter patient information to add them to the system</p>
+    </div>
+  </div>
+
+  <!-- Success Message -->
+  <div class="success-message" *ngIf="showSuccessMessage">
+    <div class="success-content">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <p>Patient added successfully! Redirecting...</p>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage && !showSuccessMessage">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+      <path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+    </svg>
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <!-- Form -->
+  <form class="add-patient-form" (ngSubmit)="onSubmit()" *ngIf="!showSuccessMessage">
+    <!-- Section: Personal Information -->
+    <div class="form-section">
+      <h3 class="section-title">Personal Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name *</label>
+          <input
+            type="text"
+            id="firstName"
+            [(ngModel)]="formData.firstName"
+            name="firstName"
+            placeholder="John"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="middleName">Middle Name</label>
+          <input
+            type="text"
+            id="middleName"
+            [(ngModel)]="formData.middleName"
+            name="middleName"
+            placeholder="A."
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="lastName">Last Name *</label>
+          <input
+            type="text"
+            id="lastName"
+            [(ngModel)]="formData.lastName"
+            name="lastName"
+            placeholder="Doe"
+            required
+          />
+        </div>
+      </div>  
+    
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gender">Gender *</label>
+          <select id="gender" [(ngModel)]="formData.gender" name="gender" required>
+            <option value="" disabled selected  >Select Gender</option> 
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="dob">Date of Birth *</label>
+          <input
+            type="date"
+            id="dob"
+            [(ngModel)]="formData.dob"
+            name="dob"
+            required
+          />
+        </div>
+      </div>  
+    </div>
+
+    <div class="form-separator"></div>  
+    <div class="form-section">
+      <h3 class="section-title">Contact Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Mobile Number</label>
+          <input
+            type="tel"
+            id="phone"
+            [(ngModel)]="formData.phone"
+            name="phone"
+            placeholder="(123) 456-7890"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="phone">Alternative Mobile Number</label>
+          <input
+            type="tel"
+            id="phone"
+            [(ngModel)]="formData.phone"
+            name="phone"
+            placeholder="(123) 456-7890"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="formData.email"
+            name="email"
+            placeholder="john.doe@example.com"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-separator"></div>  
+    <div class="form-section">  
+      <h3 class="section-title">Address Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="address">Address Line1</label>
+          <input
+            type="text"
+            id="address"
+            [(ngModel)]="formData.address"
+            name="address"
+            placeholder="123 Main St"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="address">Address Line2</label>
+          <input
+            type="text"
+            id="address"
+            [(ngModel)]="formData.address"
+            name="address"
+            placeholder="123 Main St"
+          />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="city">City</label>
+          <input
+            type="text"
+            id="city"
+            [(ngModel)]="formData.city"
+            name="city"
+            placeholder="Anytown"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="state">State/Province</label>
+          <input
+            type="text"
+            id="state"
+            [(ngModel)]="formData.state"
+            name="state"
+            placeholder="CA"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="zip">ZIP/Postal Code</label>
+          <input
+            type="text"
+            id="zip"
+            [(ngModel)]="formData.zip"
+            name="zip"
+            placeholder="12345"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input
+            type="text"
+            id="country"
+            [(ngModel)]="formData.country"
+            name="country"
+            placeholder="USA"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-separator"></div>  
+    <div class="form-section">  
+      <h3 class="section-title">Other Info</h3>
+      
+      <div class="form-row"> 
+        <div class="form-group full-width">
+          <label for="race">Race</label>
+          <input
+            type="text"
+            id="race"
+            [(ngModel)]="formData.race"
+            name="race"
+            placeholder="Race"
+          />
+        </div>
+      </div>
+
+      <div class="form-row"> 
+        <div class="form-group full-width">
+          <label for="ethnicity">Ethnicity</label>
+          <input
+            type="text" 
+            id="ethnicity"
+            [(ngModel)]="formData.ethnicity"
+            name="ethnicity"
+            placeholder="Ethnicity"
+          />
+        </div>
+      </div>
+
+      <div class="form-row"> 
+        <div class="form-group full-width">
+          <label for="isHomeboundPatient">Is Homebound Patient</label>
+          <input
+            type="text"
+            id="isHomeboundPatient"
+            [(ngModel)]="formData.isHomeboundPatient"
+            name="isHomeboundPatient"
+            placeholder="Is Homebound Patient"
+          />
+        </div>
+      </div>
+
+      <div class="form-row"> 
+        <div class="form-group full-width">
+          <label for="isHardStick">Is Hard Stick</label>
+          <input
+            type="text"
+            id="isHardStick"
+            [(ngModel)]="formData.isHardStick"
+            name="isHardStick"
+            placeholder="Is Hard Stick"
+          />
+        </div>
+      </div>
+
+      <div class="form-row"> 
+        <div class="form-group full-width">
+          <label for="patientNotes">Patient Notes</label>
+          <input
+            type="text"
+            id="patientNotes"
+            [(ngModel)]="formData.patientNotes"
+            name="patientNotes"
+            placeholder="Patient Notes"
+          />
+        </div>
+      </div>
+    </div>
+   
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="onReset()">
+        Clear Form
+      </button>
+      <button type="submit" class="btn-submit" >
+        <!-- <span *ngIf="!isSubmitting">Add Patient</span>
+        <span *ngIf="isSubmitting">Adding Patient...</span> -->
+      </button>
+    </div>
+  </form>
+</div>

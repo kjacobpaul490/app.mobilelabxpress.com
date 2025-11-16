@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../sample-app/sample-app"
+		}
+	],
+	"settings": {}
+}
