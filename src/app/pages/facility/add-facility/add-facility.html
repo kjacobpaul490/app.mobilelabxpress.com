@@ -1,0 +1,234 @@
+<div class="add-facility-container">
+  <h2>Add New Facility</h2>
+  <form (ngSubmit)="onSubmit()" #facilityForm="ngForm">
+    
+    <div class="form-group">
+      <label for="name">Facility Name: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="name" 
+        name="name" 
+        [(ngModel)]="facility.Name" 
+        (blur)="clearError('Name')"
+        [class.error]="validationErrors.Name"
+        required 
+        minlength="3"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.Name">{{ validationErrors.Name }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="mobile_number">Mobile Number: <span class="required">*</span></label>
+      <input 
+        type="tel" 
+        id="mobile_number" 
+        name="mobile_number" 
+        [(ngModel)]="facility.MobileNumber" 
+        (blur)="clearError('MobileNumber')"
+        [class.error]="validationErrors.MobileNumber"
+        pattern="[0-9]{10}"
+        maxlength="10"
+        placeholder="10-digit mobile number"
+        required />
+      <span class="error-message" *ngIf="validationErrors.MobileNumber">{{ validationErrors.MobileNumber }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="alternative_mobile_number">Alternative Mobile Number:</label>
+      <input 
+        type="tel" 
+        id="alternative_mobile_number" 
+        name="alternative_mobile_number" 
+        [(ngModel)]="facility.AlternativeMobileNumber" 
+        (blur)="clearError('AlternativeMobileNumber')"
+        [class.error]="validationErrors.AlternativeMobileNumber"
+        pattern="[0-9]{10}"
+        maxlength="10"
+        placeholder="10-digit mobile number" />
+      <span class="error-message" *ngIf="validationErrors.AlternativeMobileNumber">{{ validationErrors.AlternativeMobileNumber }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email: <span class="required">*</span></label>
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        [(ngModel)]="facility.Email" 
+        (blur)="clearError('Email')"
+        [class.error]="validationErrors.Email"
+        placeholder="example@domain.com"
+        maxlength="500"
+        required />
+      <span class="error-message" *ngIf="validationErrors.Email">{{ validationErrors.Email }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="fax_number">Fax Number:</label>
+      <input 
+        type="tel" 
+        id="fax_number" 
+        name="fax_number" 
+        [(ngModel)]="facility.FaxNumber" 
+        (blur)="clearError('FaxNumber')"
+        [class.error]="validationErrors.FaxNumber"
+        pattern="[0-9]{10}"
+        maxlength="10" />
+      <span class="error-message" *ngIf="validationErrors.FaxNumber">{{ validationErrors.FaxNumber }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="address_line1">Address Line 1: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="address_line1" 
+        name="address_line1" 
+        [(ngModel)]="facility.AddressLine1" 
+        (blur)="clearError('AddressLine1')"
+        [class.error]="validationErrors.AddressLine1"
+        required 
+        minlength="5"
+        maxlength="500" />
+      <span class="error-message" *ngIf="validationErrors.AddressLine1">{{ validationErrors.AddressLine1 }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="address_line2">Address Line 2:</label>
+      <input type="text" id="address_line2" name="address_line2" [(ngModel)]="facility.AddressLine2" maxlength="500" />
+    </div>
+
+    <div class="form-group">
+      <label for="city">City: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="city" 
+        name="city" 
+        [(ngModel)]="facility.City" 
+        (blur)="clearError('City')"
+        [class.error]="validationErrors.City"
+        required 
+        minlength="2"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.City">{{ validationErrors.City }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="state">State: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="state" 
+        name="state" 
+        [(ngModel)]="facility.State" 
+        (blur)="clearError('State')"
+        [class.error]="validationErrors.State"
+        required 
+        minlength="2"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.State">{{ validationErrors.State }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="zipcode">Zip Code: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="zipcode" 
+        name="zipcode" 
+        [(ngModel)]="facility.Zipcode" 
+        (blur)="clearError('Zipcode')"
+        [class.error]="validationErrors.Zipcode"
+        maxlength="50"
+        placeholder="Enter zipcode"
+        required />
+      <span class="error-message" *ngIf="validationErrors.Zipcode">{{ validationErrors.Zipcode }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="country" 
+        name="country" 
+        [(ngModel)]="facility.Country" 
+        (blur)="clearError('Country')"
+        [class.error]="validationErrors.Country"
+        required 
+        minlength="2"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.Country">{{ validationErrors.Country }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="primary_incharge_name">Primary Incharge Name: <span class="required">*</span></label>
+      <input 
+        type="text" 
+        id="primary_incharge_name" 
+        name="primary_incharge_name" 
+        [(ngModel)]="facility.PrimaryInchargeName" 
+        (blur)="clearError('PrimaryInchargeName')"
+        [class.error]="validationErrors.PrimaryInchargeName"
+        required 
+        minlength="3"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.PrimaryInchargeName">{{ validationErrors.PrimaryInchargeName }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="primary_incharge_mobile_number">Primary Incharge Mobile: <span class="required">*</span></label>
+      <input 
+        type="tel" 
+        id="primary_incharge_mobile_number" 
+        name="primary_incharge_mobile_number" 
+        [(ngModel)]="facility.PrimaryInchargeMobileNumber" 
+        (blur)="clearError('PrimaryInchargeMobileNumber')"
+        [class.error]="validationErrors.PrimaryInchargeMobileNumber"
+        pattern="[0-9]{10}"
+        maxlength="10"
+        placeholder="10-digit mobile number"
+        required />
+      <span class="error-message" *ngIf="validationErrors.PrimaryInchargeMobileNumber">{{ validationErrors.PrimaryInchargeMobileNumber }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="primary_incharge_designation">Primary Incharge Designation:</label>
+      <input 
+        type="text" 
+        id="primary_incharge_designation" 
+        name="primary_incharge_designation" 
+        [(ngModel)]="facility.PrimaryInchargeDesignation" 
+        (blur)="clearError('PrimaryInchargeDesignation')"
+        [class.error]="validationErrors.PrimaryInchargeDesignation"
+        minlength="2"
+        maxlength="250" />
+      <span class="error-message" *ngIf="validationErrors.PrimaryInchargeDesignation">{{ validationErrors.PrimaryInchargeDesignation }}</span>
+    </div>
+
+    <div class="form-group">
+      <label for="is_active">Is Active:</label>
+      <input type="checkbox" id="is_active" name="is_active" [(ngModel)]="facility.IsActive" />
+    </div>
+
+    <div class="form-group">
+      <label for="result_communication_method">Result Communication Method: <span class="required">*</span></label>
+      <select 
+        id="result_communication_method" 
+        name="result_communication_method" 
+        [(ngModel)]="facility.ResultCommunicationMethod" 
+        (blur)="clearError('ResultCommunicationMethod')"
+        [class.error]="validationErrors.ResultCommunicationMethod"
+        required>
+        <option value="">Select Method</option>
+        <option value="email">Email</option>
+        <option value="fax">Fax</option>
+        <option value="portal">Portal</option>
+        <option value="phone">Phone</option>
+      </select>
+      <span class="error-message" *ngIf="validationErrors.ResultCommunicationMethod">{{ validationErrors.ResultCommunicationMethod }}</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Submit</button>
+      <button type="button" (click)="facilityForm.reset()">Reset</button>
+    </div>
+
+  </form>
+</div>

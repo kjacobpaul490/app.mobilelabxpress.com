@@ -12,6 +12,7 @@ import { AllOrders } from './pages/orders/all-orders/all-orders';
 import { PendingOrders } from './pages/orders/pending-orders/pending-orders';
 import { Projects } from './pages/orders/projects/projects';
 import { Layout } from './layout/layout';
+import { AddFacility } from './pages/facility/add-facility/add-facility';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
@@ -29,7 +30,8 @@ export const routes: Routes = [
         { path: 'case-information', component: CaseInformation },
         { path: 'order-information', component: OrderInformation },
         { path: 'insurance-information', component: InsuranceInformation },
-        { path: 'preview', component: Preview }
+        { path: 'preview', component: Preview },
+        { path: 'add-facility', component: AddFacility }
       ]
     },
     { path: '**', redirectTo: '/login' }

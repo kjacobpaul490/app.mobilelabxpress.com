@@ -42,6 +42,18 @@ export class Sidebar {
         },
       ],
     },
+    {
+      id: 'facility',
+      label: 'Facility',
+      icon: '🏥',
+      submenu: [
+        {
+          id: 'add-facility',
+          label: 'Add Facility',
+          route: '/layout/add-facility',
+        },
+      ],
+    },
   ];
 
   toggleMenu(menuId: string) {
