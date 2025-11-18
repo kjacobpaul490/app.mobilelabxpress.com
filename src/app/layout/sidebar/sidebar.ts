@@ -93,6 +93,11 @@ export class Sidebar implements OnInit {
       icon: '👨‍⚕️',
       submenu: [
         {
+          id: 'physicians',
+          label: 'Physicians',
+          route: '/layout/physicians',
+        },
+        {
           id: 'add-physician',
           label: 'Add Physician',
           route: '/layout/add-physician',

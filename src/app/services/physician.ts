@@ -21,6 +21,7 @@ export interface Physician {
 })
 export class PhysicianService {
   private apiUrl = '/api/physicians/createPhysician';
+  private apiBaseUrl = '/api/physicians';
 
   constructor(private http: HttpClient) {}
 
@@ -33,9 +34,10 @@ export class PhysicianService {
     return this.http.post<any>(this.apiUrl, physician, { headers });
   }
 
-  // Get all physicians
-  getAllPhysicians(): Observable<Physician[]> {
-    return this.http.get<Physician[]>('/api/physicians');
+  // Get all physicians with pagination
+  getAllPhysicians(pageNumber: number, pageSize: number): Observable<any> {
+    // Using query parameters format: ?pageNumber=1&pageSize=20
+    return this.http.get<any>(`${this.apiBaseUrl}/getAllphysicians?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
   // Get physician by ID

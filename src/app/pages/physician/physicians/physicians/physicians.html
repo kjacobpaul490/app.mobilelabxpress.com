@@ -1,1 +1,223 @@
-<p>physicians works!</p>
+<div class="container-fluid">
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="page-header">
+        <h4 class="mb-0">All Physicians</h4>
+        <button class="btn-add-physician" (click)="addNewPhysician()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="16"></line>
+            <line x1="8" y1="12" x2="16" y2="12"></line>
+          </svg>
+          Add Physician
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="row" *ngIf="loading">
+    <div class="col-12 text-center py-5">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading physicians...</p>
+    </div>
+  </div>
+
+  <!-- No Data Message -->
+  <div class="row" *ngIf="!loading && paginatedPhysicians.length === 0">
+    <div class="col-12 text-center py-5">
+      <p class="text-muted">No physicians found.</p>
+    </div>
+  </div>
+
+  <!-- Filter Tabs -->
+  <div class="row mb-3" *ngIf="!loading">
+    <div class="col-12">
+      <div class="filter-tabs">
+        <button class="filter-tab" [class.active]="statusFilter === 'all'" (click)="filterByStatus('all')">
+          All ({{ totalRecords }})
+        </button>
+        <button class="filter-tab" [class.active]="statusFilter === 'active'" (click)="filterByStatus('active')">
+          <span class="status-dot active"></span> Active ({{ activeCount }})
+        </button>
+        <button class="filter-tab" [class.active]="statusFilter === 'inactive'" (click)="filterByStatus('inactive')">
+          <span class="status-dot inactive"></span> Inactive ({{ inactiveCount }})
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Physicians Grid -->
+  <div class="row g-3" *ngIf="!loading && paginatedPhysicians.length > 0">
+    <div class="col-md-6 col-lg-4" *ngFor="let physician of paginatedPhysicians">
+      <div class="card h-100" [class.card-inactive-bg]="!physician.IsActive">
+        <div class="card-body">
+          <div class="card-header-section">
+            <div class="title-with-status">
+              <h5 class="card-title mb-0">{{ physician.Name }}</h5>
+              <span class="status-badge-inline" [class.status-active]="physician.IsActive" [class.status-inactive]="!physician.IsActive">
+                <span class="status-dot" [class.active]="physician.IsActive" [class.inactive]="!physician.IsActive"></span>
+                {{ physician.IsActive ? 'Active' : 'Inactive' }}
+              </span>
+            </div>
+            <div class="action-buttons">
+              <button class="btn-icon btn-icon-edit" title="Edit physician">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+              </button>
+              <button class="btn-icon btn-icon-delete" (click)="confirmDelete(physician)" title="Delete physician">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  <line x1="10" y1="11" x2="10" y2="17"></line>
+                  <line x1="14" y1="11" x2="14" y2="17"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          
+          <div class="physician-details">
+            <div class="detail-item" *ngIf="physician.Npi">
+              <div class="detail-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="8.5" cy="7" r="4"></circle>
+                  <line x1="20" y1="8" x2="20" y2="14"></line>
+                </svg>
+                NPI
+              </div>
+              <div class="detail-value">{{ physician.Npi }}</div>
+            </div>
+
+            <div class="detail-item">
+              <div class="detail-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+                Phone
+              </div>
+              <div class="detail-value">
+                {{ physician.PhoneNumber }}<br>
+                <span *ngIf="physician.AlternativePhoneNumber" class="text-muted">Alt: {{ physician.AlternativePhoneNumber }}</span>
+              </div>
+            </div>
+
+            <div class="detail-item" *ngIf="physician.NpiType">
+              <div class="detail-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                Type
+              </div>
+              <div class="detail-value">{{ physician.NpiType }}</div>
+            </div>
+
+            <div class="detail-item" *ngIf="physician.MailingAddress">
+              <div class="detail-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Mailing Address
+              </div>
+              <div class="detail-value" [title]="physician.MailingAddress">{{ physician.MailingAddress }}</div>
+            </div>
+
+            <div class="detail-item" *ngIf="physician.PrimaryPracticeAddress">
+              <div class="detail-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Primary Practice
+              </div>
+              <div class="detail-value" [title]="physician.PrimaryPracticeAddress">{{ physician.PrimaryPracticeAddress }}</div>
+            </div>
+
+            <div class="detail-item" *ngIf="physician.EnumerationDate">
+              <div class="detail-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                Enumeration Date
+              </div>
+              <div class="detail-value">{{ physician.EnumerationDate | date:'shortDate' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="row mt-4" *ngIf="!loading && paginatedPhysicians.length > 0 && totalPages > 0">
+    <div class="col-12 d-flex justify-content-center">
+      <nav>
+        <ul class="pagination mb-0">
+
+          <!-- First -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(1)" style="cursor:pointer;">First</a>
+          </li>
+
+          <!-- Previous -->
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="changePage(currentPage - 1)" style="cursor:pointer;">Previous</a>
+          </li>
+
+          <!-- Page Numbers -->
+          <li class="page-item"
+              *ngFor="let page of totalPagesArray"
+              [class.active]="page === currentPage">
+            <a class="page-link" (click)="changePage(page)" style="cursor:pointer;">{{ page }}</a>
+          </li>
+
+          <!-- Next -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(currentPage + 1)" style="cursor:pointer;">Next</a>
+          </li>
+
+          <!-- Last -->
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" (click)="changePage(totalPages)" style="cursor:pointer;">Last</a>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div class="modal-overlay" *ngIf="showDeleteModal" (click)="cancelDelete()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Delete</h5>
+          <button type="button" class="btn-close" (click)="cancelDelete()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete <strong>{{ physicianToDelete?.Name }}</strong>?</p>
+          <p class="text-muted mb-0">This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" (click)="cancelDelete()">Cancel</button>
+          <button type="button" class="btn-delete" (click)="deletePhysician()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

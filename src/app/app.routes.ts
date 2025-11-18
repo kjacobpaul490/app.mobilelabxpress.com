@@ -15,6 +15,7 @@ import { Layout } from './layout/layout';
 import { AddFacility } from './pages/facility/add-facility/add-facility';
 import { AddPhysician } from './pages/physician/add-physician/add-physician';
 import { Facilities } from './pages/facility/facilities/facilities';
+import { Physicians } from './pages/physician/physicians/physicians/physicians';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
@@ -36,6 +37,7 @@ export const routes: Routes = [
         { path: 'add-facility', component: AddFacility },
         { path: 'add-physician', component: AddPhysician },
         { path: 'facilities', component: Facilities },
+        { path: 'physicians', component: Physicians}
       ]
     },
     { path: '**', redirectTo: '/login' }
