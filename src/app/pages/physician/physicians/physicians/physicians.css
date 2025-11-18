@@ -146,12 +146,12 @@ h4 {
 }
 
 .card-body {
-  padding: 1rem;
+  padding: 0.875rem;
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .card-header-section {
@@ -247,14 +247,14 @@ h4 {
 .physician-details {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   font-size: 0.8rem;
 }
 
 .detail-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .detail-label {
