@@ -16,7 +16,7 @@ import { AddFacility } from './pages/facility/add-facility/add-facility';
 import { AddPhysician } from './pages/physician/add-physician/add-physician';
 import { Facilities } from './pages/facility/facilities/facilities';
 import { Physicians } from './pages/physician/physicians/physicians/physicians';
-import { Patients } from './pages/orders/patients/patients/patients';
+import { Patients } from './pages/orders/patient/patients/patients';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
