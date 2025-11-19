@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Login } from './pages/auth/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
-import { AddPatient } from './pages/orders/add-patient/add-patient';
+import { AddPatient } from './pages/orders/patient/add-patient/add-patient';
 import { CaseInformation } from './pages/orders/case-information/case-information';
 import { CreateNewOrder } from './pages/orders/create-new-order/create-new-order';
 import { InsuranceInformation } from './pages/orders/insurance-information/insurance-information';
@@ -16,6 +16,7 @@ import { AddFacility } from './pages/facility/add-facility/add-facility';
 import { AddPhysician } from './pages/physician/add-physician/add-physician';
 import { Facilities } from './pages/facility/facilities/facilities';
 import { Physicians } from './pages/physician/physicians/physicians/physicians';
+import { Patients } from './pages/orders/patients/patients/patients';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
@@ -37,7 +38,8 @@ export const routes: Routes = [
         { path: 'add-facility', component: AddFacility },
         { path: 'add-physician', component: AddPhysician },
         { path: 'facilities', component: Facilities },
-        { path: 'physicians', component: Physicians}
+        { path: 'physicians', component: Physicians},
+        { path: 'patients', component: Patients}
       ]
     },
     { path: '**', redirectTo: '/login' }

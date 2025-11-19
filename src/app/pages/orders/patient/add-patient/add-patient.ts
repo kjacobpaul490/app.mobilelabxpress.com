@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AddPatientService } from '../../../services/patient';
+import { AddPatientService } from '../../../../services/patient';
 
 @Component({
   selector: 'app-add-patient',

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManageOrders } from './manage-orders/manage-orders';
 import { CreateNewOrder } from './create-new-order/create-new-order';
-import { AddPatient } from './add-patient/add-patient';
+import { AddPatient } from './patient/add-patient/add-patient';
 import { CaseInformation } from './case-information/case-information';
 import { OrderInformation } from './order-information/order-information';
 import { InsuranceInformation } from './insurance-information/insurance-information';
