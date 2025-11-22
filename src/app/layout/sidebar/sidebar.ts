@@ -88,6 +88,23 @@ export class Sidebar implements OnInit {
       ],
     },
     {
+      id: 'insurance',
+      label: 'Insurance',
+      icon: '📝',
+      submenu: [
+        {
+          id: 'add-insurance',
+          label: 'Add Insurance',
+          route: '/layout/add-insurance',
+        },
+        {
+          id: 'list-insurance',
+          label: 'Insurance List',
+          route: '/layout/list-insurance',
+        },
+      ],
+    },
+    {
       id: 'physician',
       label: 'Physician',
       icon: '👨‍⚕️',

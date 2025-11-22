@@ -1,0 +1,103 @@
+<div class="insurance-container">
+  <h2>{{ mode === 'add' ? 'Add Insurance Information' : (mode === 'edit' ? 'Edit Insurance Information' : 'View Insurance') }}</h2>
+  
+  <form [formGroup]="insuranceForm" class="insurance-form">
+    <div class="form-row">
+      <div class="form-group">
+      <label>Name *</label>
+      <input type="text" formControlName="NAME" class="form-control" [disabled]="mode === 'view'">
+        <div class="error-msg" *ngIf="insuranceForm.get('NAME')?.touched && insuranceForm.get('NAME')?.errors?.['required']">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+      <label>Policy Name *</label>
+      <input type="text" formControlName="POLICY_NAME" class="form-control" [disabled]="mode === 'view'">
+        <div class="error-msg" *ngIf="insuranceForm.get('POLICY_NAME')?.touched && insuranceForm.get('POLICY_NAME')?.errors?.['required']">
+          Policy name is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+      <label>Carrier Code *</label>
+      <input type="text" formControlName="CARRIER_CODE" class="form-control" [disabled]="mode === 'view'">
+        <div class="error-msg" *ngIf="insuranceForm.get('CARRIER_CODE')?.touched && insuranceForm.get('CARRIER_CODE')?.errors?.['required']">
+          Carrier code is required
+        </div>
+      </div>
+
+      <div class="form-group">
+      <label>Plan Type *</label>
+      <select formControlName="PLAN_TYPE" class="form-control" [disabled]="mode === 'view'">
+          <option value="">Select Plan Type</option>
+          <option *ngFor="let plan of planTypes" [value]="plan">{{plan}}</option>
+        </select>
+        <div class="error-msg" *ngIf="insuranceForm.get('PLAN_TYPE')?.touched && insuranceForm.get('PLAN_TYPE')?.errors?.['required']">
+          Plan type is required
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+      <label>Policy Number *</label>
+      <input type="text" formControlName="POLICY_NUMBER" class="form-control" [disabled]="mode === 'view'">
+        <div class="error-msg" *ngIf="insuranceForm.get('POLICY_NUMBER')?.touched && insuranceForm.get('POLICY_NUMBER')?.errors?.['required']">
+          Policy number is required
+        </div>
+        <div class="error-msg" *ngIf="insuranceForm.get('POLICY_NUMBER')?.touched && insuranceForm.get('POLICY_NUMBER')?.errors?.['minlength']">
+          Minimum 3 characters required
+        </div>
+      </div>
+
+      <div class="form-group">
+      <label>Group Number</label>
+      <input type="text" formControlName="GROUP_NUMBER" class="form-control" [disabled]="mode === 'view'">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+      <label>Relationship *</label>
+      <select formControlName="RELATIONSHIP" class="form-control" [disabled]="mode === 'view'">
+          <option value="">Select Relationship</option>
+          <option *ngFor="let rel of relationships" [value]="rel">{{rel}}</option>
+        </select>
+        <div class="error-msg" *ngIf="insuranceForm.get('RELATIONSHIP')?.touched && insuranceForm.get('RELATIONSHIP')?.errors?.['required']">
+          Relationship is required
+        </div>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <!-- Add mode -->
+      <ng-container *ngIf="mode === 'add'">
+        <button type="button" class="btn btn-reset" (click)="onReset()">Reset</button>
+        <button type="button" class="btn btn-save" (click)="onSave()">Save</button>
+      </ng-container>
+
+      <!-- Edit mode -->
+      <ng-container *ngIf="mode === 'edit'">
+        <button type="button" class="btn btn-reset" (click)="onReset()">Reset</button>
+        <button type="button" class="btn btn-save" (click)="onSave()">Update</button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      </ng-container>
+
+      <!-- View mode -->
+      <ng-container *ngIf="mode === 'view'">
+        <button type="button" class="btn btn-save" (click)="onEditFromView()">Edit</button>
+        <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      </ng-container>
+    </div>
+  </form>
+
+  <div *ngIf="showSuccessPopup" class="success-popup">
+    <div class="popup-content">
+      <span class="tick">✓</span>
+      Insurance information saved successfully!
+    </div>
+  </div>
+</div>
