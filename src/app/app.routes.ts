@@ -17,6 +17,8 @@ import { AddPhysician } from './pages/physician/add-physician/add-physician';
 import { Facilities } from './pages/facility/facilities/facilities';
 import { Physicians } from './pages/physician/physicians/physicians/physicians';
 import { Patients } from './pages/orders/patient/patients/patients';
+import { InsuranceListComponent } from './pages/insurance/insurance-list/list_insurance';
+import { AddInsuranceComponent } from './pages/insurance/add-insurance/add-insurance';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
@@ -37,11 +39,17 @@ export const routes: Routes = [
       { path: 'insurance-information', component: InsuranceInformation },
       { path: 'preview', component: Preview },
       { path: 'add-facility', component: AddFacility },
+      { path: 'add-facility/:guid', component: AddFacility },
+      { path: 'facilities', component: Facilities },
       { path: 'add-physician', component: AddPhysician },
       { path: 'add-physician/:guid', component: AddPhysician },
-      { path: 'facilities', component: Facilities },
       { path: 'physicians', component: Physicians },
-      { path: 'patients', component: Patients }
+      { path: 'add-patient', component: AddPatient },
+      { path: 'add-patient/:guid', component: AddPatient },
+      { path: 'patients', component: Patients },
+      { path: 'add-insurance', component: AddInsuranceComponent },
+      { path: 'add-insurance/:guid', component: AddInsuranceComponent },
+      { path: 'insurance-list', component: InsuranceListComponent }
     ]
   },
   { path: '**', redirectTo: '/login' }
