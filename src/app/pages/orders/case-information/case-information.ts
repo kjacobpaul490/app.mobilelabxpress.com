@@ -44,7 +44,6 @@ export class CaseInformation {
     }
     this.isSubmitting = true;
     setTimeout(() => {
-      console.log('Case information saved:', this.formData);
       this.router.navigate(['/layout/insurance-information']);
     }, 1000);
   }

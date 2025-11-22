@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { Login } from './pages/auth/login/login';
 import { Dashboard } from './pages/dashboard/dashboard';
-import { AddPatient } from './pages/orders/add-patient/add-patient';
+import { AddPatient } from './pages/orders/patient/add-patient/add-patient';
 import { CaseInformation } from './pages/orders/case-information/case-information';
 import { CreateNewOrder } from './pages/orders/create-new-order/create-new-order';
 import { InsuranceInformation } from './pages/orders/insurance-information/insurance-information';
@@ -13,8 +13,6 @@ import { PendingOrders } from './pages/orders/pending-orders/pending-orders';
 import { Projects } from './pages/orders/projects/projects';
 import { Layout } from './layout/layout';
 import { AddFacility } from './pages/facility/add-facility/add-facility';
-import { AddInsuranceComponent } from './pages/insurance/add-insurance/add-insurance';
-import { InsuranceListComponent } from './pages/insurance/insurance-list/list_insurance';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
@@ -33,11 +31,7 @@ export const routes: Routes = [
         { path: 'order-information', component: OrderInformation },
         { path: 'insurance-information', component: InsuranceInformation },
         { path: 'preview', component: Preview },
-        { path: 'add-facility', component: AddFacility },
-        { path: 'add-insurance', component: AddInsuranceComponent },
-        { path: 'add-insurance/:insuranceGuid', component: AddInsuranceComponent },
-        { path: 'getinsuranceByGuid/:insuranceGuid', component: AddInsuranceComponent },
-        { path: 'list-insurance', component: InsuranceListComponent }
+        { path: 'add-facility', component: AddFacility }
       ]
     },
     { path: '**', redirectTo: '/login' }

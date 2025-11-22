@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive, Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,10 +9,37 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.css',
 })
-export class Sidebar {
+export class Sidebar implements OnInit {
   sidebarOpen = true;
   activeMenu: string | null = null;
   activeSubmenu: string | null = null;
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Open the menu automatically based on current route
+    this.updateActiveMenu(this.router.url);
+    
+    // Listen to route changes
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.updateActiveMenu(event.url);
+      });
+  }
+
+  updateActiveMenu(url: string) {
+    // Find which menu contains this route
+    for (const item of this.menuItems) {
+      if (item.submenu) {
+        const hasActiveRoute = item.submenu.some(sub => url.includes(sub.route));
+        if (hasActiveRoute) {
+          this.activeMenu = item.id;
+          break;
+        }
+      }
+    }
+  }
 
   menuItems = [
     {
@@ -48,26 +76,65 @@ export class Sidebar {
       icon: '🏥',
       submenu: [
         {
+          id: 'facilities',
+          label: 'Facilities',
+          route: '/layout/facilities',
+        },
+        {
           id: 'add-facility',
           label: 'Add Facility',
           route: '/layout/add-facility',
         },
       ],
     },
-     {
+    {
       id: 'insurance',
       label: 'Insurance',
       icon: '📝',
       submenu: [
         {
           id: 'add-insurance',
-          label: 'Add insurance',
+          label: 'Add Insurance',
           route: '/layout/add-insurance',
         },
-         {
+        {
           id: 'list-insurance',
-          label: 'insurance-list',
+          label: 'Insurance List',
           route: '/layout/list-insurance',
+        },
+      ],
+    },
+    {
+      id: 'physician',
+      label: 'Physician',
+      icon: '👨‍⚕️',
+      submenu: [
+        {
+          id: 'physicians',
+          label: 'Physicians',
+          route: '/layout/physicians',
+        },
+        {
+          id: 'add-physician',
+          label: 'Add Physician',
+          route: '/layout/add-physician',
+        },
+      ],
+    },
+    {
+      id: 'patient',
+      label: 'Patient',
+      icon: '🧑‍🤝‍🧑',
+      submenu: [
+        {
+          id: 'patients',
+          label: 'Patients',
+          route: '/layout/patients',
+        },
+        {
+          id: 'add-patient',
+          label: 'Add Patient',
+          route: '/layout/add-patient',
         },
       ],
     },

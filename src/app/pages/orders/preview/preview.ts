@@ -27,7 +27,6 @@ export class Preview {
   onSubmit() {
     this.isSubmitting = true;
     setTimeout(() => {
-      console.log('Order submitted successfully');
       alert('Order has been created successfully!');
       this.router.navigate(['/layout/manage-orders']);
     }, 1500);

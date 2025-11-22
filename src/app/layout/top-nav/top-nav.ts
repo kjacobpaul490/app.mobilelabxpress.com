@@ -29,12 +29,8 @@ export class TopNav {
 
   logout() {
     this.closeProfileMenu();
-    // Add logout logic here
-    console.log('Logging out...');
   }
 
   viewNotifications() {
-    // Add notification logic here
-    console.log('Viewing notifications...');
   }
 }
