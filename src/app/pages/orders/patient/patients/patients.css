@@ -161,27 +161,44 @@ h4 {
   margin-bottom: 4px;
 }
 
-.status-badge-inline {
+/* Patient Special Badges */
+.patient-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.badge-homebound,
+.badge-hardstick {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 12px;
   font-size: 0.65rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  margin-top: 4px;
 }
 
-.status-badge-inline.status-active {
-  background-color: rgba(0, 152, 41, 0.1);
-  color: #009829;
+.badge-homebound {
+  background-color: rgba(0, 123, 255, 0.1);
+  color: #007bff;
+  border: 1px solid rgba(0, 123, 255, 0.2);
 }
 
-.status-badge-inline.status-inactive {
-  background-color: rgba(220, 53, 69, 0.1);
-  color: #dc3545;
+.badge-homebound svg {
+  stroke: #007bff;
+}
+
+.badge-hardstick {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #d39e00;
+  border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.badge-hardstick svg {
+  stroke: #d39e00;
 }
 
 .action-buttons {

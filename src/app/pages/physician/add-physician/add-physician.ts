@@ -72,8 +72,6 @@ export class AddPhysician {
     this.validationErrors = {};
     let isValid = true;
 
-    debugger;
-
     // NPI validation (int)
     if (this.physician.Npi && (this.physician.Npi <= 0 || !Number.isInteger(this.physician.Npi))) {
       this.validationErrors.Npi = 'NPI must be a valid positive integer';

@@ -87,14 +87,6 @@ export class Facilities implements OnInit {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedFacilities = this.filteredFacilities.slice(startIndex, endIndex);
-    
-    console.log('After Pagination:', {
-      filteredCount: this.filteredFacilities.length,
-      totalPages: this.totalPages,
-      paginatedCount: this.paginatedFacilities.length,
-      currentPage: this.currentPage,
-      loading: this.loading
-    });
   }
 
   ngOnInit(): void {
@@ -159,21 +151,16 @@ export class Facilities implements OnInit {
     let totalRecordsFromApi: number | null = null;
     let consecutiveEmptyPages = 0;
 
-    console.log('Starting to collect all facilities from API...');
-
     while (true) {
       try {
         const response = await this.fetchPageWithTimeout(pageToFetch);
         const facilities = this.extractFacilities(response);
-        
-        console.log(`Page ${pageToFetch}: Fetched ${facilities.length} facilities`);
 
         // If we get an empty page, increment counter
         if (facilities.length === 0) {
           consecutiveEmptyPages++;
           // If we get 2 consecutive empty pages, we're done
           if (consecutiveEmptyPages >= 2) {
-            console.log('Received 2 consecutive empty pages, stopping fetch');
             break;
           }
         } else {
@@ -185,33 +172,22 @@ export class Facilities implements OnInit {
         if (pageToFetch === 1) {
           totalRecordsFromApi = this.extractTotalRecords(response, null);
           totalPagesFromApi = this.extractTotalPages(response);
-          
-          if (totalRecordsFromApi !== null) {
-            console.log(`API reports total records: ${totalRecordsFromApi}`);
-          }
-          if (totalPagesFromApi !== null) {
-            console.log(`API reports total pages: ${totalPagesFromApi}`);
-          }
         }
 
         // Check if we've reached the last page based on metadata
         if (totalPagesFromApi !== null && pageToFetch >= totalPagesFromApi) {
-          console.log(`Reached last page according to API metadata (page ${totalPagesFromApi})`);
           break;
         }
 
         // If we got fewer records than expected, we've likely reached the end
         if (facilities.length > 0 && facilities.length < this.serverBatchSize) {
-          console.log(`Received ${facilities.length} records (less than ${this.serverBatchSize}), assuming last page`);
           break;
         }
 
         pageToFetch++;
       } catch (error) {
-        console.error(`Error fetching page ${pageToFetch}:`, error);
         // If we have some records, return what we have
         if (aggregated.length > 0) {
-          console.log(`Stopping due to error, returning ${aggregated.length} facilities collected so far`);
           break;
         }
         throw error;
@@ -219,7 +195,6 @@ export class Facilities implements OnInit {
     }
 
     this.totalRecords = totalRecordsFromApi ?? aggregated.length;
-    console.log(`Finished collecting. Total facilities: ${aggregated.length}, Total records: ${this.totalRecords}`);
     
     return aggregated;
   }

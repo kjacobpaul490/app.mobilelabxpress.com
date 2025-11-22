@@ -87,14 +87,6 @@ export class Physicians implements OnInit {
     const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedPhysicians = this.filteredPhysicians.slice(startIndex, endIndex);
-    
-    console.log('After Pagination:', {
-      filteredCount: this.filteredPhysicians.length,
-      totalPages: this.totalPages,
-      paginatedCount: this.paginatedPhysicians.length,
-      currentPage: this.currentPage,
-      loading: this.loading
-    });
   }
 
   ngOnInit(): void {
@@ -158,21 +150,16 @@ export class Physicians implements OnInit {
     let totalRecordsFromApi: number | null = null;
     let consecutiveEmptyPages = 0;
 
-    console.log('Starting to collect all physicians from API...');
-
     while (true) {
       try {
         const response = await this.fetchPageWithTimeout(pageToFetch);
         const physicians = this.extractPhysicians(response);
-        
-        console.log(`Page ${pageToFetch}: Fetched ${physicians.length} physicians`);
 
         // If we get an empty page, increment counter
         if (physicians.length === 0) {
           consecutiveEmptyPages++;
           // If we get 2 consecutive empty pages, we're done
           if (consecutiveEmptyPages >= 2) {
-            console.log('Received 2 consecutive empty pages, stopping fetch');
             break;
           }
         } else {
@@ -184,33 +171,22 @@ export class Physicians implements OnInit {
         if (pageToFetch === 1) {
           totalRecordsFromApi = this.extractTotalRecords(response, null);
           totalPagesFromApi = this.extractTotalPages(response);
-          
-          if (totalRecordsFromApi !== null) {
-            console.log(`API reports total records: ${totalRecordsFromApi}`);
-          }
-          if (totalPagesFromApi !== null) {
-            console.log(`API reports total pages: ${totalPagesFromApi}`);
-          }
         }
 
         // Check if we've reached the last page based on metadata
         if (totalPagesFromApi !== null && pageToFetch >= totalPagesFromApi) {
-          console.log(`Reached last page according to API metadata (page ${totalPagesFromApi})`);
           break;
         }
 
         // If we got fewer records than expected, we've likely reached the end
         if (physicians.length > 0 && physicians.length < this.serverBatchSize) {
-          console.log(`Received ${physicians.length} records (less than ${this.serverBatchSize}), assuming last page`);
           break;
         }
 
         pageToFetch++;
       } catch (error) {
-        console.error(`Error fetching page ${pageToFetch}:`, error);
         // If we have some records, return what we have
         if (aggregated.length > 0) {
-          console.log(`Stopping due to error, returning ${aggregated.length} physicians collected so far`);
           break;
         }
         throw error;
@@ -218,7 +194,6 @@ export class Physicians implements OnInit {
     }
 
     this.totalRecords = totalRecordsFromApi ?? aggregated.length;
-    console.log(`Finished collecting. Total physicians: ${aggregated.length}, Total records: ${this.totalRecords}`);
     
     return aggregated;
   }
@@ -227,17 +202,13 @@ export class Physicians implements OnInit {
     return new Promise((resolve, reject) => {
       const timeoutId = setTimeout(() => reject(new Error('Request timeout')), this.requestTimeoutMs);
 
-      console.log(`Fetching physicians page ${pageNumber} with batch size ${this.serverBatchSize}`);
-      
       firstValueFrom(this.physicianService.getAllPhysicians(pageNumber, this.serverBatchSize)).then(
         (response) => {
           clearTimeout(timeoutId);
-          console.log(`API Response for page ${pageNumber}:`, response);
           resolve(response);
         },
         (error) => {
           clearTimeout(timeoutId);
-          console.error(`API Error for page ${pageNumber}:`, error);
           reject(error);
         }
       );
@@ -245,34 +216,26 @@ export class Physicians implements OnInit {
   }
 
   private extractPhysicians(response: any): any[] {
-    console.log('Extracting physicians from response:', response);
-    
     if (Array.isArray(response)) {
-      console.log('Response is direct array, returning:', response.length, 'items');
       return response;
     }
 
     if (response?.data && Array.isArray(response.data)) {
-      console.log('Found physicians in response.data:', response.data.length, 'items');
       return response.data;
     }
 
     if (response?.physicians && Array.isArray(response.physicians)) {
-      console.log('Found physicians in response.physicians:', response.physicians.length, 'items');
       return response.physicians;
     }
 
     if (response?.result && Array.isArray(response.result)) {
-      console.log('Found physicians in response.result:', response.result.length, 'items');
       return response.result;
     }
 
     if (response?.items && Array.isArray(response.items)) {
-      console.log('Found physicians in response.items:', response.items.length, 'items');
       return response.items;
     }
 
-    console.warn('No physicians found in response. Response structure:', Object.keys(response || {}));
     return [];
   }
 

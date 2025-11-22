@@ -30,25 +30,17 @@
     </div>
   </div>
 
-  <div class="row mb-3" *ngIf="!loading">
+  <div class="row mb-3" *ngIf="!loading && paginatedPatients.length > 0">
     <div class="col-12">
-      <div class="filter-tabs">
-        <button class="filter-tab" [class.active]="statusFilter === 'all'" (click)="filterByStatus('all')">
-          All ({{ totalRecords }})
-        </button>
-        <button class="filter-tab" [class.active]="statusFilter === 'active'" (click)="filterByStatus('active')">
-          <span class="status-dot active"></span> Active ({{ activeCount }})
-        </button>
-        <button class="filter-tab" [class.active]="statusFilter === 'inactive'" (click)="filterByStatus('inactive')">
-          <span class="status-dot inactive"></span> Inactive ({{ inactiveCount }})
-        </button>
+      <div class="text-muted">
+        Showing {{ paginatedPatients.length }} of {{ totalRecords }} patients
       </div>
     </div>
   </div>
 
   <div class="row g-3" *ngIf="!loading && paginatedPatients.length > 0">
     <div class="col-md-6 col-lg-4" *ngFor="let patient of paginatedPatients">
-      <div class="card h-100" [class.card-inactive-bg]="!isPatientActive(patient)">
+      <div class="card h-100">
 
         <div class="card-body">
           <div class="card-header-section">
@@ -60,10 +52,23 @@
               <div class="patient-id" *ngIf="patient.PatientId || patient.PatientID || patient.id">
                 ID: {{ patient.PatientId || patient.PatientID || patient.id }}
               </div>
-              <span class="status-badge-inline" [class.status-active]="isPatientActive(patient)" [class.status-inactive]="!isPatientActive(patient)">
-                <span class="status-dot" [class.active]="isPatientActive(patient)" [class.inactive]="!isPatientActive(patient)"></span>
-                {{ getPatientStatus(patient) }}
-              </span>
+              <div class="patient-badges mt-1">
+                <span class="badge-homebound" *ngIf="isHomeboundPatient(patient)" title="Homebound Patient">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  </svg>
+                  Homebound
+                </span>
+                <span class="badge-hardstick" *ngIf="isHardStick(patient)" title="Hard Stick Patient">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  Hard Stick
+                </span>
+              </div>
             </div>
             <div class="action-buttons">
               <button class="btn-icon btn-icon-edit" title="Edit patient">
