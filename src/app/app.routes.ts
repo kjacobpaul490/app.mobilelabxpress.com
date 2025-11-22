@@ -13,6 +13,8 @@ import { PendingOrders } from './pages/orders/pending-orders/pending-orders';
 import { Projects } from './pages/orders/projects/projects';
 import { Layout } from './layout/layout';
 import { AddFacility } from './pages/facility/add-facility/add-facility';
+import { AddInsuranceComponent } from './pages/insurance/add-insurance/add-insurance';
+import { InsuranceListComponent } from './pages/insurance/insurance-list/list_insurance';
 
 export const routes: Routes = [
     { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
@@ -31,7 +33,11 @@ export const routes: Routes = [
         { path: 'order-information', component: OrderInformation },
         { path: 'insurance-information', component: InsuranceInformation },
         { path: 'preview', component: Preview },
-        { path: 'add-facility', component: AddFacility }
+        { path: 'add-facility', component: AddFacility },
+        { path: 'add-insurance', component: AddInsuranceComponent },
+        { path: 'add-insurance/:insuranceGuid', component: AddInsuranceComponent },
+        { path: 'getinsuranceByGuid/:insuranceGuid', component: AddInsuranceComponent },
+        { path: 'list-insurance', component: InsuranceListComponent }
       ]
     },
     { path: '**', redirectTo: '/login' }

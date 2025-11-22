@@ -1,10 +1,16 @@
 {
   "/api": {
-    "target": "http://localhost:3000",
+    "target": "https://mobileapi-pi.vercel.app",
     "pathRewrite": {
       "^/api": ""
     },
     "changeOrigin": true,
     "secure": false
+  },
+  "/insurance": {
+    "target": "https://mobileapi-pi.vercel.app",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

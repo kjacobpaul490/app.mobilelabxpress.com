@@ -54,6 +54,23 @@ export class Sidebar {
         },
       ],
     },
+     {
+      id: 'insurance',
+      label: 'Insurance',
+      icon: '📝',
+      submenu: [
+        {
+          id: 'add-insurance',
+          label: 'Add insurance',
+          route: '/layout/add-insurance',
+        },
+         {
+          id: 'list-insurance',
+          label: 'insurance-list',
+          route: '/layout/list-insurance',
+        },
+      ],
+    },
   ];
 
   toggleMenu(menuId: string) {
