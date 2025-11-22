@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Physician {
+  Guid: null | string;
   Npi: number | null;
   Name: string;
   PhoneNumber: string;
@@ -41,8 +42,11 @@ export class PhysicianService {
   }
 
   // Get physician by ID
-  getPhysicianById(id: number): Observable<Physician> {
-    return this.http.get<Physician>(`/api/physicians/${id}`);
+
+
+  // Get physician by GUID
+  getPhysicianByGuid(guid: string): Observable<Physician> {
+    return this.http.get<Physician>(`${this.apiBaseUrl}/getPhysicianByGuid/${guid}`);
   }
 
   // Update physician

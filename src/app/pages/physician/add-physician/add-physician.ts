@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import { PhysicianService, Physician as PhysicianModel } from '../../../services/physician';
 
 @Component({
@@ -9,8 +10,9 @@ import { PhysicianService, Physician as PhysicianModel } from '../../../services
   templateUrl: './add-physician.html',
   styleUrl: './add-physician.css',
 })
-export class AddPhysician {
+export class AddPhysician implements OnInit {
   physician: PhysicianModel = {
+    Guid: null,
     Npi: null,
     Name: '',
     PhoneNumber: '',
@@ -28,8 +30,33 @@ export class AddPhysician {
   isSubmitting = false;
   submitSuccess = false;
   submitError = '';
+  physicianGuid: string | null = null;
 
-  constructor(private physicianService: PhysicianService) {}
+  constructor(
+    private physicianService: PhysicianService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.physicianGuid = params.get('guid');
+      if (this.physicianGuid) {
+        this.loadPhysicianData(this.physicianGuid);
+      }
+    });
+  }
+
+  loadPhysicianData(guid: string): void {
+    this.physicianService.getPhysicianByGuid(guid).subscribe({
+      next: (data: PhysicianModel) => {
+        debugger;
+        this.physician = data;
+      },
+      error: (error: any) => {
+        this.submitError = 'Failed to load physician data';
+      }
+    });
+  }
 
   onSubmit() {
     if (this.validateForm()) {
@@ -53,6 +80,7 @@ export class AddPhysician {
 
   resetForm() {
     this.physician = {
+      Guid: null,
       Npi: null,
       Name: '',
       PhoneNumber: '',

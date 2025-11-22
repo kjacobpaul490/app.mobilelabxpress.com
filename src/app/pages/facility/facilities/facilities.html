@@ -32,19 +32,11 @@
     </div>
   </div>
 
-  <!-- Filter Tabs -->
-  <div class="row mb-3" *ngIf="!loading">
+  <!-- Record Count -->
+  <div class="row mb-3" *ngIf="!loading && paginatedFacilities.length > 0">
     <div class="col-12">
-      <div class="filter-tabs">
-        <button class="filter-tab" [class.active]="statusFilter === 'all'" (click)="filterByStatus('all')">
-          All ({{ totalRecords }})
-        </button>
-        <button class="filter-tab" [class.active]="statusFilter === 'active'" (click)="filterByStatus('active')">
-          <span class="status-dot active"></span> Active ({{ activeCount }})
-        </button>
-        <button class="filter-tab" [class.active]="statusFilter === 'inactive'" (click)="filterByStatus('inactive')">
-          <span class="status-dot inactive"></span> Inactive ({{ inactiveCount }})
-        </button>
+      <div class="text-muted">
+        Showing page {{ currentPage }} of {{ totalPages }} ({{ totalRecords }} total facilities)
       </div>
     </div>
   </div>
@@ -180,7 +172,6 @@
       </div>
       <div class="modal-body">
         <p>Are you sure you want to delete <strong>{{ facilityToDelete?.Name }}</strong>?</p>
-        <p class="text-muted mb-0">This action cannot be undone.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-cancel" (click)="cancelDelete()">Cancel</button>

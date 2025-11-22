@@ -44,7 +44,11 @@ export class AddFacilityService {
   getAllFacilities(pageNumber: number, pageSize: number): Observable<any> {
     return this.http.get<any>(`${this.apiBaseUrl}/getAllfacilities?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
-  
+
+  // Delete facility by GUID
+  deleteFacility(facilityGuid: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiBaseUrl}/deleteFacilityByGuid/${facilityGuid}`);
+  }
 
   // Validate facility data
   validateFacility(facility: Facility): { isValid: boolean; errors: any } {

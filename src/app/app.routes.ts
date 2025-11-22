@@ -19,28 +19,30 @@ import { Physicians } from './pages/physician/physicians/physicians/physicians';
 import { Patients } from './pages/orders/patient/patients/patients';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
-    { path: 'login', component: Login },
+  { path: '', redirectTo: '/layout/dashboard', pathMatch: 'full' },
+  { path: 'login', component: Login },
 
-    { path: 'layout', component: Layout, 
-      children: [
-        { path: 'dashboard', component: Dashboard },
-        { path: 'manage-orders', component: ManageOrders },
-        { path: 'all-orders', component: AllOrders },
-        { path: 'pending-orders', component: PendingOrders },
-        { path: 'projects', component: Projects },
-        { path: 'add-patient', component: AddPatient },
-        { path: 'create-new-order', component: CreateNewOrder },
-        { path: 'case-information', component: CaseInformation },
-        { path: 'order-information', component: OrderInformation },
-        { path: 'insurance-information', component: InsuranceInformation },
-        { path: 'preview', component: Preview },
-        { path: 'add-facility', component: AddFacility },
-        { path: 'add-physician', component: AddPhysician },
-        { path: 'facilities', component: Facilities },
-        { path: 'physicians', component: Physicians},
-        { path: 'patients', component: Patients}
-      ]
-    },
-    { path: '**', redirectTo: '/login' }
+  {
+    path: 'layout', component: Layout,
+    children: [
+      { path: 'dashboard', component: Dashboard },
+      { path: 'manage-orders', component: ManageOrders },
+      { path: 'all-orders', component: AllOrders },
+      { path: 'pending-orders', component: PendingOrders },
+      { path: 'projects', component: Projects },
+      { path: 'add-patient', component: AddPatient },
+      { path: 'create-new-order', component: CreateNewOrder },
+      { path: 'case-information', component: CaseInformation },
+      { path: 'order-information', component: OrderInformation },
+      { path: 'insurance-information', component: InsuranceInformation },
+      { path: 'preview', component: Preview },
+      { path: 'add-facility', component: AddFacility },
+      { path: 'add-physician', component: AddPhysician },
+      { path: 'add-physician/:guid', component: AddPhysician },
+      { path: 'facilities', component: Facilities },
+      { path: 'physicians', component: Physicians },
+      { path: 'patients', component: Patients }
+    ]
+  },
+  { path: '**', redirectTo: '/login' }
 ];
