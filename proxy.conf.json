@@ -1,16 +1,8 @@
 {
   "/api": {
-    "target": "https://mobileapi-pi.vercel.app",
-    "pathRewrite": {
-      "^/api": ""
-    },
+    "target": "https://api-mlx-com-blue.vercel.app/",
     "changeOrigin": true,
-    "secure": false
-  },
-  "/insurance": {
-    "target": "https://mobileapi-pi.vercel.app",
     "secure": false,
-    "changeOrigin": true,
     "logLevel": "debug"
   }
 }

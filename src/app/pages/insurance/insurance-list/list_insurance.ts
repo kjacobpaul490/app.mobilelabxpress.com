@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface Insurance {
  INSURANCE_GUID: string;
@@ -20,7 +23,7 @@ export interface Insurance {
 @Component({
   selector: 'app-insurance-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, ReactiveFormsModule, HttpClientModule, MatTableModule, MatPaginatorModule],
   templateUrl: './list_insurance.html',
   styleUrls: ['./list_insurance.css']
 })
@@ -39,7 +42,7 @@ export class InsuranceListComponent implements OnInit {
     'actions'
   ];
   
-  insuranceData: Insurance[] = [];
+  dataSource = new MatTableDataSource<Insurance>();
   insuranceForm: FormGroup;
   showForm = false;
   isEditMode = false;
@@ -110,12 +113,12 @@ export class InsuranceListComponent implements OnInit {
             RELATIONSHIP: r.RELATIONSHIP ?? '',
             createdDate: r.createdDate ? new Date(r.createdDate) : new Date()
           }));
-          this.insuranceData = mapped;
+          this.dataSource.data = mapped;
           this.totalItems = res.result.totalCount ?? mapped.length;
           this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         } else {
           console.warn('Unexpected response shape from', url, res);
-          this.insuranceData = [];
+          this.dataSource.data = [];
           this.totalItems = 0;
           this.totalPages = 0;
         }
@@ -123,7 +126,7 @@ export class InsuranceListComponent implements OnInit {
       error: err => {
         console.error('Failed to load insurance data:', err);
         // clear data on error
-        this.insuranceData = [];
+        this.dataSource.data = [];
         this.totalItems = 0;
         this.totalPages = 0;
       }
@@ -151,7 +154,7 @@ export class InsuranceListComponent implements OnInit {
       this.http.get<any>(deleteUrl).subscribe({
         next: (res) => {
           // Remove from local data
-          this.insuranceData = this.insuranceData.filter((item: Insurance) => item.INSURANCE_GUID !== insurance.INSURANCE_GUID);
+          this.dataSource.data = this.dataSource.data.filter((item: Insurance) => item.INSURANCE_GUID !== insurance.INSURANCE_GUID);
           this.showSuccessMessage('Insurance deleted successfully!');
           // Reload data to update totals and pagination
           this.loadInsuranceData(this.currentPage, this.pageSize);
@@ -170,10 +173,10 @@ export class InsuranceListComponent implements OnInit {
 
       if (this.isEditMode && this.editingId) {
         // Update existing record
-        const index = this.insuranceData.findIndex((item: Insurance) => item.id === this.editingId);
+        const index = this.dataSource.data.findIndex((item: Insurance) => item.id === this.editingId);
         if (index !== -1) {
-          this.insuranceData[index] = {
-            ...this.insuranceData[index],
+          this.dataSource.data[index] = {
+            ...this.dataSource.data[index],
             ...formData
           };
         }
@@ -182,11 +185,11 @@ export class InsuranceListComponent implements OnInit {
         // Add new record
         const newInsurance: Insurance = {
           INSURANCE_GUID: '',
-          id: Math.max(...this.insuranceData.map((item: Insurance) => item.id), 0) + 1,
+          id: Math.max(...this.dataSource.data.map((item: Insurance) => item.id), 0) + 1,
           ...formData,
           createdDate: new Date()
         };
-        this.insuranceData = [...this.insuranceData, newInsurance];
+        this.dataSource.data = [...this.dataSource.data, newInsurance];
         this.showSuccessMessage('Insurance added successfully!');
       }
 
